@@ -1,0 +1,25 @@
+NAME="scowl"
+VERSION=7.1
+RELEASE=1
+CATEGORY="Text"
+SUMMARY="Spell Checker Oriented Word Lists"
+DESCRIPTION="The SCOWL is a collection of word lists split up in various
+sizes, and other categories, intended to be suitable for use in spell
+checkers."
+HOMEPAGE="http://wordlist.sourceforge.net/"
+SRC_URI="mirror://sourceforge/wordlist/${NAME}-${VERSION}.tar.gz"
+
+src_compile() {
+	cd ${S}
+	for lang in american british canadian
+	do
+		inform "Creating ${lang} dictionary..."
+		./mk-list -v 1 ${lang} 70 > ${B}/${lang}-english
+	done
+}
+
+src_install() {
+	cd ${B}
+	insinto /usr/share/dict
+	doins *
+}
