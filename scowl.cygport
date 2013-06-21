@@ -1,25 +1,41 @@
 NAME="scowl"
 VERSION=7.1
-RELEASE=1
+RELEASE=2
 CATEGORY="Text"
 SUMMARY="Spell Checker Oriented Word Lists"
 DESCRIPTION="The SCOWL is a collection of word lists split up in various
 sizes, and other categories, intended to be suitable for use in spell
 checkers."
 HOMEPAGE="http://wordlist.sourceforge.net/"
-SRC_URI="mirror://sourceforge/wordlist/${NAME}-${VERSION}.tar.gz"
+SRC_URI="mirror://sourceforge/wordlist/scowl-${VERSION}.tar.gz"
+PATCH_URI="
+	http://pkgs.fedoraproject.org/cgit/hunspell-en.git/plain/mozilla_words.patch
+	http://pkgs.fedoraproject.org/cgit/hunspell-en.git/plain/en_US-strippedabbrevs.patch
+	http://pkgs.fedoraproject.org/cgit/hunspell-en.git/plain/hunspell-en-SI_and_IEC.patch
+"
+
+PKG_NAMES="${NAME} hunspell-en"
+scowl_CONTENTS="usr/share/dict/ usr/share/doc/scowl/"
+hunspell_en_CONTENTS="usr/share/doc/hunspell-en/ usr/share/myspell/"
 
 src_compile() {
-	cd ${S}
+	lndirs
+	cd ${B}
 	for lang in american british canadian
 	do
 		inform "Creating ${lang} dictionary..."
 		./mk-list -v 1 ${lang} 70 > ${B}/${lang}-english
 	done
+	cd ${B}/speller
+	cygmake hunspell
 }
 
 src_install() {
 	cd ${B}
 	insinto /usr/share/dict
-	doins *
+	doins {american,british,canadian}-english
+	insinto /usr/share/myspell/dicts
+	doins speller/en_*.{dic,aff}
+	docinto /hunspell-en
+	dodoc speller/README_en_*
 }
