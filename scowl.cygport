@@ -1,22 +1,27 @@
 NAME="scowl"
-VERSION=7.1
-RELEASE=2
+VERSION=2015.08.24
+RELEASE=1
 CATEGORY="Text"
 SUMMARY="Spell Checker Oriented Word Lists"
 DESCRIPTION="The SCOWL is a collection of word lists split up in various
 sizes, and other categories, intended to be suitable for use in spell
 checkers."
 HOMEPAGE="http://wordlist.sourceforge.net/"
-SRC_URI="mirror://sourceforge/wordlist/scowl-${VERSION}.tar.gz"
-PATCH_URI="
-	http://pkgs.fedoraproject.org/cgit/hunspell-en.git/plain/mozilla_words.patch
-	http://pkgs.fedoraproject.org/cgit/hunspell-en.git/plain/en_US-strippedabbrevs.patch
-	http://pkgs.fedoraproject.org/cgit/hunspell-en.git/plain/hunspell-en-SI_and_IEC.patch
+SRC_URI="
+	mirror://sourceforge/wordlist/scowl-${VERSION}.tar.gz
 "
+
+ARCH=noarch
 
 PKG_NAMES="${NAME} hunspell-en"
 scowl_CONTENTS="usr/share/dict/ usr/share/doc/scowl/"
+hunspell_en_SUMMARY="English dictionaries for Hunspell"
 hunspell_en_CONTENTS="usr/share/doc/hunspell-en/ usr/share/myspell/"
+
+#CYGPORT_USE_UNSTABLE_API=1
+#src_unpack_hook() {
+#	mv ../*en_GB.* ../dictionary.lst .
+#}
 
 src_compile() {
 	lndirs
@@ -34,8 +39,26 @@ src_install() {
 	cd ${B}
 	insinto /usr/share/dict
 	doins {american,british,canadian}-english
-	insinto /usr/share/myspell/dicts
+
+	insinto /usr/share/myspell
 	doins speller/en_*.{dic,aff}
+
+	pushd ${D}/usr/share/myspell
+	ln -s en_GB-ise.aff en_GB.aff
+	ln -s en_GB-ise.dic en_GB.dic
+
+	en_GB_aliases="en_AG en_AU en_BS en_BW en_BZ en_DK en_GH en_HK en_IE en_IN en_JM en_MW en_NA en_NG en_NZ en_SG en_TT en_ZA en_ZM en_ZW"
+	for lang in $en_GB_aliases; do
+		ln -s en_GB.aff $lang.aff
+		ln -s en_GB.dic $lang.dic
+	done
+	en_US_aliases="en_PH"
+	for lang in $en_US_aliases; do
+		ln -s en_US.aff $lang.aff
+		ln -s en_US.dic $lang.dic
+	done
+	popd
+
 	docinto /hunspell-en
 	dodoc speller/README_en_*
 }
