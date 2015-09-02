@@ -1,0 +1,22 @@
+https://cygwin.com/ml/cygwin/2015-08/msg00544.html
+caused by: https://github.com/kevina/wordlist/commit/751cd15
+
+--- origsrc/scowl-2015.08.24/speller/en.aff	2015-08-24 15:40:27.000000000 -0500
++++ src/scowl-2015.08.24/speller/en.aff	2015-09-02 13:10:03.285305500 -0500
+@@ -1,4 +1,4 @@
+-SET UTF8
++SET UTF-8
+ TRY esianrtolcdugmphbyfvkwzESIANRTOLCDUGMPHBYFVKWZ'
+ ICONV 1
+ ICONV ’ '
+--- origsrc/scowl-2015.08.24/speller/munch-list	2015-08-24 15:40:27.000000000 -0500
++++ src/scowl-2015.08.24/speller/munch-list	2015-09-02 13:15:25.803760200 -0500
+@@ -42,7 +42,7 @@ my $affix_file;
+ # (such as the ICONV entry) should not be a problem as Aspell ignores
+ # it.  The words them self are already in iso8859-1.
+  
+-$affix_file =~ s/^SET UTF8$/SET ISO8859-1/m;
++$affix_file =~ s/^SET UTF-8$/SET ISO8859-1/m;
+ 
+ my $datadir = File::Temp->newdir();
+ 
