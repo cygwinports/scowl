@@ -1,6 +1,6 @@
 NAME="scowl"
-VERSION=2015.08.24
-RELEASE=2
+VERSION=2016.01.19
+RELEASE=1
 CATEGORY="Text"
 SUMMARY="Spell Checker Oriented Word Lists"
 DESCRIPTION="The SCOWL is a collection of word lists split up in various
@@ -10,7 +10,6 @@ HOMEPAGE="http://wordlist.sourceforge.net/"
 SRC_URI="
 	mirror://sourceforge/wordlist/scowl-${VERSION}.tar.gz
 "
-PATCH_URI="2015.08.24-UTF-8.patch"
 
 ARCH=noarch
 
