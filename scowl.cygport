@@ -1,5 +1,5 @@
 NAME="scowl"
-VERSION=2016.01.19
+VERSION=2016.06.26
 RELEASE=1
 CATEGORY="Text"
 SUMMARY="Spell Checker Oriented Word Lists"
