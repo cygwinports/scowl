@@ -1,0 +1,11 @@
+--- origsrc/scowl-2016.11.20/mk-list	2016-11-20 20:47:32.000000000 -0600
++++ src/scowl-2016.11.20/mk-list	2016-11-23 16:00:05.653741900 -0600
+@@ -32,7 +32,7 @@ die "Cannot specify both --file-names-on
+ my %spelling_map = qw(en-us american en-gb british? en-gb-ise british
+                       en-gb-ize british_z en-gb-oed british_z en-ca canadian en-au australian);
+ $spelling_map{$_} = $_
+-    foreach (qw(english special american british canadian
++    foreach (qw(english special american british canadian australian
+                 variant_1 variant_2 variant_3 
+                 british_variant_1 british_variant_2
+                 canadian_variant_1 canadian_variant_2

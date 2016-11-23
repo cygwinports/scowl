@@ -1,5 +1,5 @@
 NAME="scowl"
-VERSION=2016.06.26
+VERSION=2016.11.20
 RELEASE=1
 CATEGORY="Text"
 SUMMARY="Spell Checker Oriented Word Lists"
@@ -9,6 +9,9 @@ checkers."
 HOMEPAGE="http://wordlist.sourceforge.net/"
 SRC_URI="
 	mirror://sourceforge/wordlist/scowl-${VERSION}.tar.gz
+"
+PATCH_URI="
+	2016.11.20-en-au.patch
 "
 
 ARCH=noarch
@@ -26,7 +29,7 @@ hunspell_en_CONTENTS="usr/share/doc/hunspell-en/ usr/share/myspell/"
 src_compile() {
 	lndirs
 	cd ${B}
-	for lang in american british canadian
+	for lang in american australian british canadian
 	do
 		inform "Creating ${lang} dictionary..."
 		./mk-list -v 1 ${lang} 70 > ${B}/${lang}-english
@@ -38,7 +41,7 @@ src_compile() {
 src_install() {
 	cd ${B}
 	insinto /usr/share/dict
-	doins {american,british,canadian}-english
+	doins {american,australian,british,canadian}-english
 
 	insinto /usr/share/myspell
 	doins speller/en_*.{dic,aff}
@@ -47,7 +50,7 @@ src_install() {
 	ln -s en_GB-ise.aff en_GB.aff
 	ln -s en_GB-ise.dic en_GB.dic
 
-	en_GB_aliases="en_AG en_AU en_BS en_BW en_BZ en_DK en_GH en_HK en_IE en_IN en_JM en_MW en_NA en_NG en_NZ en_SG en_TT en_ZA en_ZM en_ZW"
+	en_GB_aliases="en_AG en_BS en_BW en_BZ en_DK en_GH en_HK en_IE en_IN en_JM en_MW en_NA en_NG en_NZ en_SG en_TT en_ZA en_ZM en_ZW"
 	for lang in $en_GB_aliases; do
 		ln -s en_GB.aff $lang.aff
 		ln -s en_GB.dic $lang.dic
